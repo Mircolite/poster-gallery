@@ -32,7 +32,7 @@ export default function Lightbox({ poster, posters, onClose, onNavigate }) {
     }
   }, [onClose, goPrev, goNext])
 
-  const { title, author, studentId, className, description, gradient } = poster
+  const { title, author, studentId, className, description, gradient, image } = poster
 
   return (
     <AnimatePresence>
@@ -97,7 +97,15 @@ export default function Lightbox({ poster, posters, onClose, onNavigate }) {
               className="max-w-full max-h-full flex items-center justify-center"
               style={{ transform: `scale(${zoom})`, transition: 'transform 0.3s ease' }}
             >
-              <div className={`w-80 md:w-96 aspect-[3/4] bg-gradient-to-br ${gradient} rounded-2xl shadow-2xl`} />
+              {image ? (
+                <img
+                  src={image}
+                  alt={title}
+                  className="max-h-[80vh] rounded-2xl shadow-2xl object-contain"
+                />
+              ) : (
+                <div className={`w-80 md:w-96 aspect-[3/4] bg-gradient-to-br ${gradient} rounded-2xl shadow-2xl`} />
+              )}
             </motion.div>
 
             {hasPrev && (
@@ -137,8 +145,8 @@ export default function Lightbox({ poster, posters, onClose, onNavigate }) {
 
               <div className="grid grid-cols-2 gap-4">
                 <InfoItem label="作者" value={author} />
-                <InfoItem label="学号" value={studentId} />
-                <InfoItem label="班级" value={className} />
+                {studentId && <InfoItem label="学号" value={studentId} />}
+                {className && <InfoItem label="班级" value={className} />}
               </div>
 
               <div>

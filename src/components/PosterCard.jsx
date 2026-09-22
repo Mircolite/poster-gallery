@@ -7,7 +7,13 @@ export default function PosterCard({ poster, index, onClick, viewMode }) {
   const inView = useInView(ref, { once: true, margin: '-50px' })
   const [isHovered, setIsHovered] = useState(false)
 
-  const { title, author, studentId, gradient } = poster
+  const { title, author, studentId, gradient, image } = poster
+
+  const thumbnail = image ? (
+    <img src={image} alt={title} className="w-full h-full object-cover" loading="lazy" />
+  ) : (
+    <div className={`w-full h-full bg-gradient-to-br ${gradient}`} />
+  )
 
   if (viewMode === 'list') {
     return (
@@ -20,10 +26,14 @@ export default function PosterCard({ poster, index, onClick, viewMode }) {
         className="flex gap-4 bg-card rounded-xl p-3 cursor-pointer
                    hover:shadow-lg transition-shadow border border-gray-100"
       >
-        <div className={`w-20 h-20 rounded-lg shrink-0 bg-gradient-to-br ${gradient}`} />
+        <div className="w-20 h-20 rounded-lg shrink-0 overflow-hidden">
+          {thumbnail}
+        </div>
         <div className="flex-1 min-w-0 flex flex-col justify-center">
           <h3 className="font-medium text-sm truncate">{title}</h3>
-          <p className="text-xs text-text-secondary mt-1">{author} · {studentId}</p>
+          <p className="text-xs text-text-secondary mt-1">
+            {author}{studentId ? ` · ${studentId}` : ''}
+          </p>
         </div>
       </motion.div>
     )
@@ -48,12 +58,10 @@ export default function PosterCard({ poster, index, onClick, viewMode }) {
     >
       <div className="relative overflow-hidden">
         <div
-          className="w-full aspect-[3/4] transition-transform duration-500 ease-out"
-          style={{
-            transform: isHovered ? 'scale(1.05)' : 'scale(1)',
-          }}
+          className="w-full aspect-[3/4] transition-transform duration-500 ease-out overflow-hidden"
+          style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)' }}
         >
-          <div className={`w-full h-full bg-gradient-to-br ${gradient}`} />
+          {thumbnail}
         </div>
 
         <motion.div
@@ -77,8 +85,10 @@ export default function PosterCard({ poster, index, onClick, viewMode }) {
           {title}
         </h3>
         <div className="flex items-center justify-between">
-          <p className="text-xs text-text-secondary">{author}</p>
-          <span className="text-xs text-text-secondary font-mono">#{String(poster.id).padStart(3, '0')}</span>
+          <p className="text-xs text-text-secondary truncate">{author}</p>
+          {studentId && (
+            <span className="text-xs text-text-secondary font-mono">#{String(poster.id).padStart(3, '0')}</span>
+          )}
         </div>
       </div>
     </motion.div>

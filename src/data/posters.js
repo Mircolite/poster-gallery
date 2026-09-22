@@ -19,4 +19,5 @@ export const posters = Array.from({ length: 80 }, (_, i) => ({
   className: '待填写',
   description: '待填写',
   gradient: hues[i % hues.length],
+  year: 2026,
 }))

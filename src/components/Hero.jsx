@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 
-export default function Hero({ total }) {
+export default function Hero({ total, year }) {
   return (
     <section className="relative min-h-[70vh] flex flex-col items-center justify-center overflow-hidden px-4">
       {/* Animated background blobs */}
@@ -42,7 +42,7 @@ export default function Hero({ total }) {
           医学人工智能
         </h1>
         <p className="text-lg md:text-xl text-text-secondary mb-2">
-          研2026年秋季班 · 学生海报作品展
+          {year}年 · 学生海报作品展
         </p>
         <div className="flex items-center gap-3 justify-center mt-6 text-text-secondary">
           <span className="px-3 py-1 bg-tag-bg text-primary rounded-full text-sm font-medium">
